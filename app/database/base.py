@@ -1,5 +1,8 @@
 
-import psycopg2
+import asyncpg
 
-conn = psycopg2.connect()
+
+print("salom")
+
+
 
