@@ -2,9 +2,8 @@ from fastapi import APIRouter
 
 auth_router = APIRouter(prefix='/auth')
 
-@auth_router()
+@auth_router('/register')
 async def register():
     pass
 
-# register qilish
-# login qildim
+

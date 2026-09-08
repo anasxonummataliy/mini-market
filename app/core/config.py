@@ -1,9 +1,9 @@
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 
 
 class Conf(BaseSettings):
     PG_USER: str
-    PG_PASSWORD: str
+    PG_PASSWORD: str = 'password'
     PG_DB: str
     PG_HOST: str
     PG_PORT: int

@@ -1,8 +1,0 @@
-
-import asyncpg
-
-
-print("salom")
-
-
-
