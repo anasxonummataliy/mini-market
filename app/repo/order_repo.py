@@ -51,5 +51,5 @@ class OrderRepo:
                 "select * from orders where id = $1 and user_id = $2", order_id, user_id
             )
             return JSONResponse(content={"message": "", "order": order})
-        except:``
+        except:
             return HTTPException(status_code=400, detail="Userning orderi mavjud emas")
