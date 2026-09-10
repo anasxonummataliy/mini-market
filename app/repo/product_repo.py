@@ -1,20 +1,29 @@
-from app.core.config import conf
+from fastapi import HTTPException
+from fastapi.responses import JSONResponse
 
 
 class ProductRepo:
     @staticmethod
-    async def add_product(conn, user_id, product_id, *, status):
+    async def add_product(conn, name, price, stock_quantity):
         try:
-            await conn.execute(
-                "insert into orders(status, user_id, product_id) values ($1, $2, $3)",
-                status,
-                user_id,
-                product_id,
+            product = await conn.fetch(
+                "insert into products(name, price, stock_quantity) values ($1, $2, $3) returning *",
+                name,
+                price,
+                stock_quantity,
+            )
+            return JSONResponse(
+                content={"message": "Product yaratildi.", "product": product}
             )
         except Exception as e:
-            print(e)
+            return HTTPException(status_code=400, detail="Product yaratishda xatolik!")
 
     @staticmethod
     async def all_products(conn):
-        products = conn.fetch("select * from products")
-        return products
+        try:
+            products = conn.fetch("select * from products")
+            return JSONResponse(
+                content={"message": "Product yaratildi.", "products": products}
+            )
+        except:
+            return HTTPException(status_code=400, detail="Product mavjud emas!")

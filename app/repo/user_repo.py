@@ -1,11 +1,7 @@
-from http.client import HTTPResponse
-from urllib.error import HTTPError
-
 from argon2 import verify_password
-import asyncpg
 from fastapi import HTTPException
 from fastapi.responses import JSONResponse
-from app.core.config import conf
+
 from app.core.jwt import create_jwt_token
 
 
@@ -48,13 +44,10 @@ class UserRepo:
     @staticmethod
     async def check_user(conn, username, password):
         try:
-            user = await conn.fetch(
-                "select * from users where username = $1", username
-            )
+            user = await conn.fetch("select * from users where username = $1", username)
             if verify_password(user.password, password):
                 return user
             else:
-                raise HTTPException(detail="Parol xato!", status_code=400)
+                return HTTPException(detail="Parol xato!", status_code=400)
         except:
-            raise HTTPException(400, "Bunday user mavjud emas!")
-
+            return HTTPException(400, "Bunday user mavjud emas!")
